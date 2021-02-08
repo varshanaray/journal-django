@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Notebook List</h1>
+  {% if notebk_list %}
+  <ul>
+    {% for notebk in notebk_list %}
+      <li>
+        <a href="{{ notebk.get_absolute_url }}">{{notebk.title}}</a> ({{notebk.description}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no notebooks in your collection.</p>
+  {% endif %} 
+{% endblock %}
