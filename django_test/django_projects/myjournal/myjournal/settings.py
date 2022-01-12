@@ -20,13 +20,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o86*#2y4vfg=k=l65xqa4$8z-s#&0img-2ip@x$&cqf#hb+_y^'
+# SECRET_KEY = 'o86*#2y4vfg=k=l65xqa4$8z-s#&0img-2ip@x$&cqf#hb+_y^'
+# SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = "cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag"
+import os
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 
+#DEBUG_PROPAGATE_EXCEPTIONS = True
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+#DEBUG = False
 
-ALLOWED_HOSTS = ['shelf-journals.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+#ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,6 +128,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+STATIC_ROOT = BASE_DIR / 'notebooks'
+
 STATIC_URL = '/static/'
 
 
@@ -127,3 +138,12 @@ STATIC_URL = '/static/'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+CSRF_TRUSTED_ORIGINS = ['https://8000-tomato-hedgehog-a34cfq4p.ws-us25.gitpod.io','https://*.127.0.0.1']
