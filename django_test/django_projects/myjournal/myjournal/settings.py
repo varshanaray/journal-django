@@ -26,7 +26,7 @@ SECRET_KEY = 'o86*#2y4vfg=k=l65xqa4$8z-s#&0img-2ip@x$&cqf#hb+_y^'
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ['shelf-journals.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
